@@ -4,32 +4,32 @@ var http = require("http");
 
 var myMyo = Myo.create();
 
-myMyo.on('connect', function(edge){
-	myMyo.unlock(1);
+myMyo.on('connected', function(){
+	myMyo.unlock();
 });
 
 var options = {
 	hostname: "169.254.58.228",
 	port: 1337,
-	path: "/index?key=",
 	method: "GET"
 };
 
 myMyo.on('fist', function(edge){
     if(!edge) return;
+	myMyo.unlock(30000);
     console.log("fist == power off");
-    options.path += "KEY_POWER";
+    options.path = "/index?key=KEY_POWER";
 	var request = http.request(options, function(res) {});
 	request.end();
-console.log(request);
-console.log("KEY_POWER");
+
     myMyo.vibrate();
 });
 
-myMyo.on('spread', function(edge){
+myMyo.on('fingers_spread', function(edge){
     if(!edge) return;
+	myMyo.unlock(30000);
     console.log("spread == power on");
-    options.path += "KEY_POWER";
+    options.path = "/index?key=KEY_POWER";
 	var request = http.request(options, function(res) {});
 	request.end();
 
@@ -38,8 +38,9 @@ myMyo.on('spread', function(edge){
 
 myMyo.on('wave_in', function(edge){
     if(!edge) return;
+	myMyo.unlock(30000);
     console.log("wave_in == channel down");
-    options.path += "KEY_CHANNELDOWN";
+    options.path = "/index?key=KEY_CHANNELDOWN";
 	var request = http.request(options, function(res) {});
 	request.end();
 
@@ -48,8 +49,9 @@ myMyo.on('wave_in', function(edge){
 
 myMyo.on('wave_out', function(edge){
     if(!edge) return;
+	myMyo.unlock(30000);
     console.log("wave_out == channel up");
-    options.path += "KEY_CHANNELUP";
+    options.path = "/index?key=KEY_CHANNELUP";
 	var request = http.request(options, function(res) {});
 	request.end();
 
