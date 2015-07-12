@@ -4,38 +4,51 @@ var http = require("http");
 
 var myMyo = Myo.create();
 
-myMyo.on('wave_out', function(edge){
-        myMyo.unlock(30000);
+myMyo.on('connect', function(edge){
+	myMyo.unlock(1);
 });
 
 var options = {
-	hostname: "127.0.0.1",
+	hostname: "169.254.58.228",
 	port: 1337,
-	path: "/index?command=channel_up",
-	headers: {"command": "channel_up"},
+	path: "/index?key=",
 	method: "GET"
 };
 
-var i =0;
 myMyo.on('fist', function(edge){
     if(!edge) return;
-	var request = http.request(options, function(res) {
-/*		var body = "";
-		res.on("data", function(chunk) {
-			body += chunk;
-		});
-		res.on("end", function() {
-			console.log(body);
-		});*/
-	});
-i++;
-console.log(i);
+    options.path += "KEY_POWER";
+	var request = http.request(options, function(res) {});
 	request.end();
-
-
-//	console.log(request);
+console.log(request);
+console.log("KEY_POWER");
     myMyo.vibrate();
-
 });
 
+myMyo.on('spread', function(edge){
+    if(!edge) return;
+    options.path += "KEY_POWER";
+	var request = http.request(options, function(res) {});
+	request.end();
+
+    myMyo.vibrate();
+});
+
+myMyo.on('wave_in', function(edge){
+    if(!edge) return;
+    options.path += "KEY_CHANNELDOWN";
+	var request = http.request(options, function(res) {});
+	request.end();
+
+    myMyo.vibrate();
+});
+
+myMyo.on('wave_out', function(edge){
+    if(!edge) return;
+    options.path += "KEY_CHANNELUP";
+	var request = http.request(options, function(res) {});
+	request.end();
+
+    myMyo.vibrate();
+});
 
