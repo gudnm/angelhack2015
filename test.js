@@ -17,6 +17,7 @@ var options = {
 
 myMyo.on('fist', function(edge){
     if(!edge) return;
+    console.log("fist == power off");
     options.path += "KEY_POWER";
 	var request = http.request(options, function(res) {});
 	request.end();
@@ -27,6 +28,7 @@ console.log("KEY_POWER");
 
 myMyo.on('spread', function(edge){
     if(!edge) return;
+    console.log("spread == power on");
     options.path += "KEY_POWER";
 	var request = http.request(options, function(res) {});
 	request.end();
@@ -36,6 +38,7 @@ myMyo.on('spread', function(edge){
 
 myMyo.on('wave_in', function(edge){
     if(!edge) return;
+    console.log("wave_in == channel down");
     options.path += "KEY_CHANNELDOWN";
 	var request = http.request(options, function(res) {});
 	request.end();
@@ -45,6 +48,7 @@ myMyo.on('wave_in', function(edge){
 
 myMyo.on('wave_out', function(edge){
     if(!edge) return;
+    console.log("wave_out == channel up");
     options.path += "KEY_CHANNELUP";
 	var request = http.request(options, function(res) {});
 	request.end();
